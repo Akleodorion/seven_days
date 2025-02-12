@@ -3,7 +3,6 @@ import 'package:seven_days/core/errors/failures.dart';
 import 'package:seven_days/features/challenge/domain/repository/challenge_repository.dart';
 
 class UpdateChallengeUsecase {
-
   final ChallengeRepository repository;
 
   UpdateChallengeUsecase({required this.repository});
