@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'package:seven_days/core/errors/exceptions.dart';
+import 'package:seven_days/features/challenge/data/model/challenge_model.dart';
 import 'package:seven_days/features/challenge/domain/entity/challenge.dart';
+import 'package:http/http.dart' as http;
 
 abstract class ChallengeRemoteDataSource {
   Future<List<Challenge>> fetchChallenges();
@@ -8,20 +12,52 @@ abstract class ChallengeRemoteDataSource {
 
 class ChallengeRemoteDataSourceImpl implements ChallengeRemoteDataSource {
   @override
-  Future<Challenge> createChallenge() {
-    // TODO: implement createChallenge
-    throw UnimplementedError();
+  Future<List<Challenge>> fetchChallenges() async {
+    final Uri url = Uri.parse('String');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonData = json.decode(response.body);
+
+      final List<Challenge> challenges = jsonData['challenges']
+          .map<Challenge>((json) => ChallengeModel.fromJson(json: json))
+          .toList();
+
+      return challenges;
+    }
+
+    throw ServerException(
+      errorMessage: "Mauvais requête serveur, veuillez ré-essayer plus tard",
+    );
   }
 
   @override
-  Future<List<Challenge>> fetchChallenges() {
-    // TODO: implement fetchChallenges
-    throw UnimplementedError();
+  Future<Challenge> createChallenge() async {
+    final Uri url = Uri.parse('String');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonData = json.decode(response.body);
+      return ChallengeModel.fromJson(json: jsonData['challenge']);
+    }
+
+    throw ServerException(
+      errorMessage: "Mauvais requête serveur, veuillez ré-essayer plus tard",
+    );
   }
 
   @override
-  Future<Challenge> updateChallenge() {
-    // TODO: implement updateChallenge
-    throw UnimplementedError();
+  Future<Challenge> updateChallenge() async {
+    final Uri url = Uri.parse('String');
+    final response = await http.get(url);
+
+    if (response.statusCode == 201) {
+      final Map<String, dynamic> jsonData = json.decode(response.body);
+      return ChallengeModel.fromJson(json: jsonData['challenge']);
+    }
+
+    throw ServerException(
+      errorMessage: "Mauvais requête serveur, veuillez ré-essayer plus tard",
+    );
   }
 }

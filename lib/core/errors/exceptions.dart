@@ -3,3 +3,9 @@ class LocalDatabaseException implements Exception {
 
   LocalDatabaseException({required this.errorMessage});
 }
+
+class ServerException implements Exception {
+  final String errorMessage;
+  
+  ServerException({required this.errorMessage});
+}
