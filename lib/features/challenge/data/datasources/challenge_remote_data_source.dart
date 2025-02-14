@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 
 abstract class ChallengeRemoteDataSource {
   Future<List<Challenge>> fetchChallenges();
-  Future<Challenge> updateChallenge();
-  Future<Challenge> createChallenge();
+  Future<Challenge> updateChallenge({required Challenge challenge});
+  Future<Challenge> createChallenge({required Challenge challenge});
 }
 
 class ChallengeRemoteDataSourceImpl implements ChallengeRemoteDataSource {
@@ -32,7 +32,7 @@ class ChallengeRemoteDataSourceImpl implements ChallengeRemoteDataSource {
   }
 
   @override
-  Future<Challenge> createChallenge() async {
+  Future<Challenge> createChallenge({required Challenge challenge}) async {
     final Uri url = Uri.parse('String');
     final response = await http.get(url);
 
@@ -47,7 +47,7 @@ class ChallengeRemoteDataSourceImpl implements ChallengeRemoteDataSource {
   }
 
   @override
-  Future<Challenge> updateChallenge() async {
+  Future<Challenge> updateChallenge({required Challenge challenge}) async {
     final Uri url = Uri.parse('String');
     final response = await http.get(url);
 

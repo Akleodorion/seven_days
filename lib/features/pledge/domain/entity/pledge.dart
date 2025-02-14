@@ -1,16 +1,25 @@
 import 'package:equatable/equatable.dart';
-import 'package:seven_days/features/challenge/domain/entity/challenge.dart';
 
 class Pledge extends Equatable {
+  final int id;
   final String description;
   final String pledgerName;
   final bool done;
-  final int challengeId;
+  final int? challengeId;
 
-  const Pledge(this.challengeId,
-      {required this.description,
-      required this.pledgerName,
-      required this.done});
+  const Pledge(
+    this.challengeId, {
+    required this.id,
+    required this.description,
+    required this.pledgerName,
+    required this.done,
+  });
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [
+        id,
+        description,
+        pledgerName,
+        done,
+        challengeId,
+      ];
 }

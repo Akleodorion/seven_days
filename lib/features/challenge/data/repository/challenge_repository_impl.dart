@@ -5,7 +5,7 @@ import 'package:seven_days/features/challenge/data/datasources/challenge_remote_
 import 'package:seven_days/features/challenge/domain/entity/challenge.dart';
 import 'package:seven_days/features/challenge/domain/repository/challenge_repository.dart';
 
-typedef FutureChallenge = Future<Challenge> Function();
+typedef FutureChallenge = Future<Challenge>;
 
 class ChallengeRepositoryImpl implements ChallengeRepository {
   final ChallengeRemoteDataSource dataSource;
@@ -23,20 +23,22 @@ class ChallengeRepositoryImpl implements ChallengeRepository {
   }
 
   @override
-  Future<Either<Failure, Challenge>> createChallenge() async {
-    return _executeChallenge(dataSource.createChallenge);
+  Future<Either<Failure, Challenge>> createChallenge(
+      {required Challenge challenge}) async {
+    return _executeChallenge(dataSource.createChallenge(challenge: challenge));
   }
 
   @override
-  Future<Either<Failure, Challenge>> updateChallenge() async {
-    return _executeChallenge(dataSource.createChallenge);
+  Future<Either<Failure, Challenge>> updateChallenge(
+      {required Challenge challenge}) async {
+    return _executeChallenge(dataSource.createChallenge(challenge: challenge));
   }
 
   Future<Either<Failure, Challenge>> _executeChallenge(
     FutureChallenge challengeOperation,
   ) async {
     try {
-      final Challenge challenge = await challengeOperation();
+      final Challenge challenge = await challengeOperation;
       return Right(challenge);
     } on ServerException catch (failure) {
       return Left(ServerFailure(errorMessage: failure.errorMessage));
