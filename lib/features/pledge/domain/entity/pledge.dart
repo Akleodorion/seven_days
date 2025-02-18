@@ -7,9 +7,9 @@ class Pledge extends Equatable {
   final bool done;
   final int? challengeId;
 
-  const Pledge(
-    this.challengeId, {
+  const Pledge({
     required this.id,
+    required this.challengeId,
     required this.description,
     required this.pledgerName,
     required this.done,

@@ -10,8 +10,6 @@ class CreateChallengeUsecase {
 
   Future<Either<Failure, Challenge>> call(
       {required Challenge challenge}) async {
-    return await repository.createChallenge(
-      challenge: challenge,
-    );
+    return await repository.createChallenge(challenge: challenge);
   }
 }

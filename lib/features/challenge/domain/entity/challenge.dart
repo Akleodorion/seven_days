@@ -13,5 +13,10 @@ class Challenge extends Equatable {
       required this.done});
 
   @override
-  List<Object?> get props => [id, description, proposed, done];
+  List<Object?> get props => [
+        id,
+        description,
+        proposed,
+        done,
+      ];
 }
