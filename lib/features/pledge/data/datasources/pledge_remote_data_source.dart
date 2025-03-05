@@ -29,12 +29,30 @@ class PledgeRemoteDataSourceImpl implements PledgeRemoteDataSource {
   }
 
   @override
-  Future<Pledge> createPledge() {
-    throw UnimplementedError();
+  Future<Pledge> createPledge() async {
+    final Uri uri = Uri.parse('url');
+
+    final response = await http.get(uri);
+
+    if (response.statusCode == 201) {
+      final Map<String, dynamic> jsonData = json.decode(response.body);
+      return PledgeModel.fromJson(json: jsonData);
+    }
+
+    throw ServerException(errorMessage: 'oops');
   }
 
   @override
-  Future<Pledge> updatePledge() {
-    throw UnimplementedError();
+  Future<Pledge> updatePledge() async {
+    final Uri uri = Uri.parse('url');
+
+    final response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonData = json.decode(response.body);
+      return PledgeModel.fromJson(json: jsonData);
+    }
+
+    throw ServerException(errorMessage: 'oops');
   }
 }
