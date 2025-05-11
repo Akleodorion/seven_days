@@ -6,13 +6,13 @@ import 'package:seven_days/features/game/data/model/game_model.dart';
 import 'package:seven_days/features/game/domain/entity/game.dart';
 import 'package:seven_days/features/player/domain/entity/player.dart';
 
-abstract class GameRemoteDateSource {
+abstract class GameRemoteDataSource {
   Future<Game> createGame({required List<Player> players});
   Future<Game> updateGame({required int gameId});
   Future<Game?> activeGame();
 }
 
-class GameRemoteDateSourceImpl implements GameRemoteDateSource {
+class GameRemoteDataSourceImpl implements GameRemoteDataSource {
   @override
   Future<Game?> activeGame() async {
     final Uri url = Uri.parse('Url');
