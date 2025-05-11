@@ -21,7 +21,7 @@ class GameRemoteDateSourceImpl implements GameRemoteDateSource {
     if (response.statusCode == 200) {
       final Map<String, dynamic>? jsonData = json.decode(response.body);
 
-      return jsonData == null ? null : GameModel.fromJson(json: jsonData!);
+      return jsonData == null ? null : GameModel.fromJson(json: jsonData);
     }
 
     throw ServerException(

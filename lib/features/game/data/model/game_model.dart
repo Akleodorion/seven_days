@@ -1,3 +1,4 @@
+import 'package:seven_days/core/enums/game_status.dart';
 import 'package:seven_days/features/game/domain/entity/game.dart';
 
 class GameModel extends Game {
@@ -12,7 +13,7 @@ class GameModel extends Game {
   factory GameModel.fromJson({required Map<String, dynamic> json}) {
     return GameModel(
       id: json['id'],
-      gameStatus: json['gameStatus'],
+      gameStatus: GameStatus.fromJson(name: json['status']),
       challenge: json['challenge'],
       players: json['players'],
       pledges: json['pledges'],
