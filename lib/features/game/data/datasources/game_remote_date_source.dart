@@ -19,8 +19,9 @@ class GameRemoteDateSourceImpl implements GameRemoteDateSource {
     final http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {
-      final Map<String, dynamic> jsonData = json.decode(response.body);
-      return GameModel.fromJson(json: jsonData);
+      final Map<String, dynamic>? jsonData = json.decode(response.body);
+
+      return jsonData == null ? null : GameModel.fromJson(json: jsonData!);
     }
 
     throw ServerException(
@@ -29,9 +30,22 @@ class GameRemoteDateSourceImpl implements GameRemoteDateSource {
   }
 
   @override
-  Future<Game> createGame({required List<Player> players}) {
-    // TODO: implement createGame
-    throw UnimplementedError();
+  Future<Game> createGame({required List<Player> players}) async {
+    final Uri url = Uri.parse('url');
+    final http.Response response = await http.post(
+      url,
+      body: json.encode(players),
+      headers: {'Accept': 'application/json'},
+    );
+
+    if (response.statusCode == 201) {
+      Map<String, dynamic> jsonData = json.decode(response.body);
+      return GameModel.fromJson(json: jsonData);
+    }
+
+    throw ServerException(
+      errorMessage: 'Server Unreachable',
+    );
   }
 
   @override
