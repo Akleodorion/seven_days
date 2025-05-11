@@ -49,8 +49,21 @@ class GameRemoteDateSourceImpl implements GameRemoteDateSource {
   }
 
   @override
-  Future<Game> updateGame({required int gameId}) {
-    // TODO: implement updateGame
-    throw UnimplementedError();
+  Future<Game> updateGame({required int gameId}) async {
+    final Uri url = Uri.parse('url');
+    final http.Response response = await http.patch(
+      url,
+      body: json.encode(gameId),
+      headers: {'Accept': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> jsonData = json.decode(response.body);
+      return GameModel.fromJson(json: jsonData);
+    }
+
+    throw ServerException(
+      errorMessage: 'Server Unreachable',
+    );
   }
 }
