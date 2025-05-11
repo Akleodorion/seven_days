@@ -1,5 +1,7 @@
 import 'package:seven_days/core/enums/game_status.dart';
+import 'package:seven_days/features/challenge/data/model/challenge_model.dart';
 import 'package:seven_days/features/game/domain/entity/game.dart';
+import 'package:seven_days/features/pledge/data/model/pledge_model.dart';
 
 class GameModel extends Game {
   const GameModel({
@@ -14,9 +16,10 @@ class GameModel extends Game {
     return GameModel(
       id: json['id'],
       gameStatus: GameStatus.fromJson(name: json['status']),
-      challenge: json['challenge'],
+      challenge: ChallengeModel.fromJson(json: json['challenge']),
       players: json['players'],
-      pledges: json['pledges'],
+      pledges: List.generate(json['pledges'].length,
+          (i) => PledgeModel.fromJson(json: json['pledges'][i])),
     );
   }
 }
