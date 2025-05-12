@@ -24,5 +24,5 @@ class Error extends CreateGameState {
   final String errorMessage;
   final Game? game;
 
-  Error({required this.errorMessage, required this.game});
+  Error({required this.errorMessage, required this.game}); 
 }
