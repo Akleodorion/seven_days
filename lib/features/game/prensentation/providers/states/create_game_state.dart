@@ -16,6 +16,9 @@ class Loaded extends CreateGameState {
   Loaded copyWith({required Game? game}) {
     return Loaded(game: game ?? this.game);
   }
+
+  @override
+  List<Object?> get props => [game];
 }
 
 class Loading extends CreateGameState {}
@@ -24,5 +27,8 @@ class Error extends CreateGameState {
   final String errorMessage;
   final Game? game;
 
-  Error({required this.errorMessage, required this.game}); 
+  Error({required this.errorMessage, required this.game});
+
+  @override
+  List<Object?> get props => [errorMessage, game];
 }
