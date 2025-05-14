@@ -9,7 +9,7 @@ class ActiveGameState extends Equatable {
 class Unloaded extends ActiveGameState {}
 
 class Loaded extends ActiveGameState {
-  final Game game;
+  final Game? game;
 
   Loaded({required this.game});
 

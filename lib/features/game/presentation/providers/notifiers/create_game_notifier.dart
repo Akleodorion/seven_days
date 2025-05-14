@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:seven_days/core/errors/failures.dart';
 import 'package:seven_days/features/game/domain/entity/game.dart';
 import 'package:seven_days/features/game/domain/usecases/create_game_usecase.dart';
-import 'package:seven_days/features/game/prensentation/providers/states/create_game_state.dart';
+import 'package:seven_days/features/game/presentation/providers/states/create_game_state.dart';
 import 'package:seven_days/features/player/domain/entity/player.dart';
 
 class CreateGameNotifier extends StateNotifier<CreateGameState> {
