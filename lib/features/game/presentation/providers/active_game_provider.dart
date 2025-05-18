@@ -4,7 +4,7 @@ import 'package:seven_days/features/game/presentation/providers/notifiers/active
 import 'package:seven_days/features/game/presentation/providers/states/active_game_state.dart';
 import 'package:seven_days/injection_container.dart';
 
-final activeGameNotifier =
+final activeGameProvider =
     StateNotifierProvider<ActiveGameNotifier, ActiveGameState>((ref) {
   final ActiveGameUsecase activeGameUsecase = sl<ActiveGameUsecase>();
   return ActiveGameNotifier(activeGameUsecase: activeGameUsecase);
