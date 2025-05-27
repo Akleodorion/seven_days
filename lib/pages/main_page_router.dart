@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:seven_days/features/game/presentation/pages/live_game_page.dart';
+import 'package:seven_days/features/game/presentation/pages/live_game/live_game_page.dart';
 import 'package:seven_days/features/game/presentation/pages/retry_active_game_page.dart';
 import 'package:seven_days/features/game/presentation/pages/start_game_page.dart';
 import 'package:seven_days/features/game/presentation/providers/active_game_provider.dart';
 import 'package:seven_days/features/game/presentation/providers/states/active_game_state.dart';
+import 'package:seven_days/features/player/presentation/providers/fetch_players_provider.dart';
 
 class MainPageRouter extends ConsumerStatefulWidget {
   const MainPageRouter({super.key});
@@ -21,6 +22,7 @@ class _MainPageRouterState extends ConsumerState<MainPageRouter> {
 
   @override
   void initState() {
+    ref.read(fetchPlayersProvider.notifier).fetchPlayer();
     ref.read(activeGameProvider.notifier).activeGame();
     super.initState();
   }
@@ -31,22 +33,20 @@ class _MainPageRouterState extends ConsumerState<MainPageRouter> {
       future: _activeGameState(),
       builder: (context, snapshot) {
         return router(
-          state: snapshot.data!,
+          state: snapshot.data,
         );
       },
     );
   }
 }
 
-Widget router({required ActiveGameState state}) {
+Widget router({required ActiveGameState? state}) {
   Widget widget = Placeholder();
   if (state is Loaded && state.game == null) {
     widget = StartGamePage();
-  }
-  if (state is Loaded && state.game != null) {
+  } else if (state is Loaded && state.game != null) {
     widget = LiveGamePage();
-  }
-  if (state is Error) {
+  } else if (state is Error) {
     widget = RetryActiveGamePage();
   } else {
     widget = CircularProgressIndicator();

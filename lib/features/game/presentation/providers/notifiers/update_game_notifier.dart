@@ -10,11 +10,11 @@ class UpdateGameNotifier extends StateNotifier<UpdateGameState> {
 
   UpdateGameNotifier({required this.updateGameUsecase}) : super(Unloaded());
 
-  Future<UpdateGameState> updateGame({required int gameId}) async {
+  Future<UpdateGameState> updateGame({required Game game}) async {
     state = Loading();
 
     final Either<Failure, Game> response =
-        await updateGameUsecase.call(gameId: gameId);
+        await updateGameUsecase.call(game: game);
 
     response.fold((failure) {
       if (failure is ServerFailure) {

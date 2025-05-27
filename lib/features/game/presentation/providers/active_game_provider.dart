@@ -9,3 +9,14 @@ final activeGameProvider =
   final ActiveGameUsecase activeGameUsecase = sl<ActiveGameUsecase>();
   return ActiveGameNotifier(activeGameUsecase: activeGameUsecase);
 });
+
+final gameProvider = Provider((ref) {
+  final state = ref.read(activeGameProvider);
+  if (state is Loaded) {
+    return state.game;
+  } else if (state is Error) {
+    return state.game;
+  } else {
+    return null;
+  }
+});

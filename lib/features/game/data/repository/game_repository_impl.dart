@@ -33,10 +33,10 @@ class GameRepositoryImpl implements GameRepository {
   }
 
   @override
-  Future<Either<Failure, Game>> updateGame({required int gameId}) async {
+  Future<Either<Failure, Game>> updateGame({required Game game}) async {
     try {
-      final Game game = await dataSource.updateGame(gameId: gameId);
-      return Right(game);
+      final Game result = await dataSource.updateGame(game: game);
+      return Right(result);
     } on ServerException catch (failure) {
       return Left(ServerFailure(errorMessage: failure.errorMessage));
     }

@@ -19,4 +19,16 @@ enum GameStatus {
 
     return map[name] ?? GameStatus.unknown;
   }
+
+  get string {
+    Map<GameStatus, String> map = {
+      GameStatus.created: 'created',
+      GameStatus.ongoing: 'ongoing',
+      GameStatus.over: 'over',
+      GameStatus.decided: 'decided',
+      GameStatus.archived: 'archived',
+    };
+
+    return map[this];
+  }
 }

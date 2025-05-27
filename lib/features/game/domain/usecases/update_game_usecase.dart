@@ -8,7 +8,7 @@ class UpdateGameUsecase {
 
   UpdateGameUsecase({required this.repository});
 
-  Future<Either<Failure, Game>> call({required int gameId}) async {
-    return await repository.updateGame(gameId: gameId);
+  Future<Either<Failure, Game>> call({required Game game}) async {
+    return await repository.updateGame(game: game);
   }
 }
