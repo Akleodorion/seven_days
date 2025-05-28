@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:seven_days/features/game/presentation/providers/active_game_provider.dart';
-import 'package:seven_days/features/game/presentation/providers/states/active_game_state.dart';
+import 'package:seven_days/features/game/presentation/providers/states/update_game_state.dart';
 import 'package:seven_days/features/game/presentation/providers/update_game_provider.dart';
+import 'package:seven_days/features/game/presentation/providers/states/active_game_state.dart'
+    as ag;
+import 'package:seven_days/features/player/presentation/providers/notifiers/current_player_provider.dart';
 
 class OverLayout extends ConsumerWidget {
   const OverLayout({
@@ -12,8 +15,9 @@ class OverLayout extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(activeGameProvider);
+    final currentPlayer = ref.read(playerProvider);
 
-    if (state is! Loaded || state.game == null) {
+    if (state is! ag.Loaded || state.game == null) {
       return const Center(child: CircularProgressIndicator());
     }
 
@@ -45,8 +49,13 @@ class OverLayout extends ConsumerWidget {
               ],
             ),
           ElevatedButton(
-            onPressed: () {
-              ref.read(updateGameProvider.notifier).updateGame(game: game);
+            onPressed: () async {
+              final state = await ref
+                  .read(updateGameProvider.notifier)
+                  .updateGame(game: game, currentPlayer: currentPlayer!);
+              if (state is Loaded) {
+                ref.read(activeGameProvider.notifier).activeGame();
+              }
             },
             child: Text("Décider de la partie"),
           ),

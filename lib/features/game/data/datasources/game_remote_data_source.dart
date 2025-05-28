@@ -8,7 +8,7 @@ import 'package:seven_days/features/player/domain/entity/player.dart';
 
 abstract class GameRemoteDataSource {
   Future<Game> createGame({required List<Player> players});
-  Future<Game> updateGame({required Game game});
+  Future<Game> updateGame({required Game game, required Player currentPlayer});
   Future<Game?> activeGame();
 }
 
@@ -62,12 +62,13 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
   }
 
   @override
-  Future<Game> updateGame({required Game game}) async {
+  Future<Game> updateGame(
+      {required Game game, required Player currentPlayer}) async {
     final Uri url = Uri.parse("http://localhost:3000/api/v1/games/${game.id}");
     final http.Response response = await http.patch(
       url,
       body: json.encode({
-        'player_id': 1,
+        'player_id': currentPlayer.id,
         'game': game.toJson(),
       }),
       headers: {

@@ -6,6 +6,7 @@ import 'package:seven_days/features/game/presentation/pages/start_game_page.dart
 import 'package:seven_days/features/game/presentation/providers/active_game_provider.dart';
 import 'package:seven_days/features/game/presentation/providers/states/active_game_state.dart';
 import 'package:seven_days/features/player/presentation/providers/fetch_players_provider.dart';
+import 'package:seven_days/features/player/presentation/providers/notifiers/current_player_provider.dart';
 
 class MainPageRouter extends ConsumerStatefulWidget {
   const MainPageRouter({super.key});
@@ -15,28 +16,21 @@ class MainPageRouter extends ConsumerStatefulWidget {
 }
 
 class _MainPageRouterState extends ConsumerState<MainPageRouter> {
-  Future<ActiveGameState> _activeGameState() async {
-    final state = ref.watch(activeGameProvider);
-    return state;
-  }
-
   @override
   void initState() {
-    ref.read(fetchPlayersProvider.notifier).fetchPlayer();
-    ref.read(activeGameProvider.notifier).activeGame();
     super.initState();
+
+    Future.microtask(() {
+      ref.read(currentPlayerProvider.notifier).currentPlayer();
+      ref.read(fetchPlayersProvider.notifier).fetchPlayer();
+      ref.read(activeGameProvider.notifier).activeGame();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _activeGameState(),
-      builder: (context, snapshot) {
-        return router(
-          state: snapshot.data,
-        );
-      },
-    );
+    final ActiveGameState state = ref.watch(activeGameProvider);
+    return router(state: state);
   }
 }
 

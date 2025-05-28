@@ -8,6 +8,7 @@ import 'package:seven_days/features/game/domain/usecases/update_game_usecase.dar
 import 'package:seven_days/features/player/data/datasources/player_remote_data_source.dart';
 import 'package:seven_days/features/player/data/repository/player_repository_impl.dart';
 import 'package:seven_days/features/player/domain/repository/player_repository.dart';
+import 'package:seven_days/features/player/domain/usecases/current_player_usecase.dart';
 import 'package:seven_days/features/player/domain/usecases/fetch_players_usecase.dart';
 
 final sl = GetIt.instance;
@@ -41,6 +42,9 @@ Future<void> init() async {
   // Usecases
   sl.registerFactory<FetchPlayersUsecase>(
       () => FetchPlayersUsecase(repository: sl()));
+
+  sl.registerFactory<CurrentPlayerUsecase>(
+      () => CurrentPlayerUsecase(repository: sl()));
 
   // Repository
   sl.registerFactory<PlayerRepository>(

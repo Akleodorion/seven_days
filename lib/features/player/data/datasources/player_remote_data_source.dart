@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 abstract class PlayerRemoteDataSource {
   Future<List<Player>> fetchPlayer();
+  Future<Player> currentPlayer();
 }
 
 class PlayerRemoteDataSourceImpl implements PlayerRemoteDataSource {
@@ -23,6 +24,27 @@ class PlayerRemoteDataSourceImpl implements PlayerRemoteDataSource {
           .toList();
 
       return playersData;
+    }
+    throw ServerException(errorMessage: 'Oops');
+  }
+
+  @override
+  Future<Player> currentPlayer() async {
+    final Map<String, String> params = {
+      'name': 'Chris',
+    };
+    final Uri url =
+        Uri.parse('http://localhost:3000/api/v1/players/current_player')
+            .replace(
+      queryParameters: params,
+    );
+
+    final http.Response response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      final Player playerData = PlayerModel.fromJson(json: jsonData['player']);
+      return playerData;
     }
     throw ServerException(errorMessage: 'Oops');
   }

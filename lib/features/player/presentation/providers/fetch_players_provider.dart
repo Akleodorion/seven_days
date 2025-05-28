@@ -11,7 +11,7 @@ final fetchPlayersProvider =
 });
 
 final playersProvider = Provider((ref) {
-  final state = ref.read(fetchPlayersProvider);
+  final state = ref.watch(fetchPlayersProvider);
   if (state is Loaded) {
     return state.players;
   } else if (state is Error) {

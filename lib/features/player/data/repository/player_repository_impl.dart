@@ -21,4 +21,16 @@ class PlayerRepositoryImpl implements PlayerRepository {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, Player>> currentPlayer() async {
+    try {
+      final data = await dataSource.currentPlayer();
+      return Right(data);
+    } on ServerException catch (failure) {
+      return Left(
+        ServerFailure(errorMessage: failure.errorMessage),
+      );
+    }
+  }
 }

@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'Seven days',
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Player name"),
+          title: Text("Seven Days"),
         ),
         body: Mainpage(),
       ),

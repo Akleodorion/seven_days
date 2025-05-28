@@ -11,7 +11,7 @@ final activeGameProvider =
 });
 
 final gameProvider = Provider((ref) {
-  final state = ref.read(activeGameProvider);
+  final state = ref.watch(activeGameProvider);
   if (state is Loaded) {
     return state.game;
   } else if (state is Error) {
