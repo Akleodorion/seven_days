@@ -15,7 +15,7 @@ class OngoingLayout extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentPlayer = ref.read(playerProvider);
+    final currentPlayer = ref.watch(playerProvider);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

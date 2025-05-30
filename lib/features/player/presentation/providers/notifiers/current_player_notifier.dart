@@ -12,6 +12,7 @@ class CurrentPlayerNotifier extends StateNotifier<CurrentPlayerState> {
   Future<CurrentPlayerState> currentPlayer() async {
     final response = await currentPlayerUsecase.call();
     response.fold((failure) {
+      print(failure);
       if (failure is ServerFailure) {
         state = Error(
           message: failure.errorMessage,
@@ -19,6 +20,7 @@ class CurrentPlayerNotifier extends StateNotifier<CurrentPlayerState> {
         );
       }
     }, (success) {
+      print(success);
       state = Loaded(player: success);
     });
     return state;

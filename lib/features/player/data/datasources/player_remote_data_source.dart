@@ -30,7 +30,8 @@ class PlayerRemoteDataSourceImpl implements PlayerRemoteDataSource {
 
   @override
   Future<Player> currentPlayer() async {
-    final Map<String, String> params = {
+    final Map<String, dynamic> params = {
+      'id': '1',
       'name': 'Chris',
     };
     final Uri url =
