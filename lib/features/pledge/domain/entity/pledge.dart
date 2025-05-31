@@ -3,7 +3,7 @@ import 'package:seven_days/core/enums/pledge_status.dart';
 
 class Pledge extends Equatable {
   final int id;
-  final int targetId;
+  final int? targetId;
   final int playerId;
   final String description;
   final PledgeStatus status;

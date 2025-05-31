@@ -44,7 +44,8 @@ class PlayerRemoteDataSourceImpl implements PlayerRemoteDataSource {
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
-      final Player playerData = PlayerModel.fromJson(json: jsonData['player']);
+
+      final Player playerData = PlayerModel.fromJson(json: jsonData);
       return playerData;
     }
     throw ServerException(errorMessage: 'Oops');
