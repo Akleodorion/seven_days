@@ -42,7 +42,41 @@ class _MainPageRouterState extends State<MainPageRouter> {
       body: pages[_currentIndex],
       floatingActionButton: (_currentIndex == 1 || _currentIndex == 2)
           ? FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Center(
+                              child: Text("Edit/new"),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                          padding: EdgeInsets.symmetric(horizontal: 30),
+                          child: TextFormField()),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Method de creation ou d update challenge et pledge.
+                        },
+                        child: Text("Modifier / Créer un challenge"),
+                      )
+                    ],
+                  ),
+                );
+              },
               child: Icon(Icons.abc_outlined),
             )
           : null,

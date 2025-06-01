@@ -29,10 +29,11 @@ class ChallengesPages extends StatelessWidget {
                 child: ListTile(
                   title: Text(challenge.description),
                   trailing: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.settings,
-                      )),
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.settings,
+                    ),
+                  ),
                 ),
               )
         ],
