@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:seven_days/features/challenge/presentation/pages/challenges_pages.dart';
 import 'package:seven_days/features/game/presentation/pages/live_game/live_game_page.dart';
 import 'package:seven_days/features/game/presentation/pages/retry_active_game_page.dart';
 import 'package:seven_days/features/game/presentation/pages/start_game_page.dart';
@@ -26,11 +27,25 @@ class _MainPageRouterState extends State<MainPageRouter> {
 
   @override
   Widget build(BuildContext context) {
+    final Map<int, Widget> pages = {
+      0: router(state: widget.state),
+      1: ChallengesPages(
+        challenges: widget.currentPlayer.challenges,
+      ),
+      2: Text("page 2"),
+    };
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.currentPlayer.name),
       ),
-      body: router(state: widget.state),
+      body: pages[_currentIndex],
+      floatingActionButton: (_currentIndex == 1 || _currentIndex == 2)
+          ? FloatingActionButton(
+              onPressed: () {},
+              child: Icon(Icons.abc_outlined),
+            )
+          : null,
       bottomNavigationBar: MyBottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: (int value) {
