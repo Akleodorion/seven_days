@@ -1,10 +1,19 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:seven_days/core/enums/challenge_status.dart';
+import 'package:seven_days/features/challenge/domain/entity/challenge.dart';
 import 'package:seven_days/features/challenge/presentation/pages/challenges_pages.dart';
+import 'package:seven_days/features/challenge/presentation/providers/create_challenge_provider.dart';
 import 'package:seven_days/features/game/presentation/pages/live_game/live_game_page.dart';
 import 'package:seven_days/features/game/presentation/pages/retry_active_game_page.dart';
 import 'package:seven_days/features/game/presentation/pages/start_game_page.dart';
 import 'package:seven_days/features/game/presentation/providers/states/active_game_state.dart';
+import 'package:seven_days/features/challenge/presentation/providers/states/create_challenge_state.dart'
+    as ccs;
 import 'package:seven_days/features/player/domain/entity/player.dart';
+import 'package:seven_days/features/player/presentation/providers/notifiers/current_player_provider.dart';
 import 'package:seven_days/pages/my_botom_navigation_bar.dart';
 
 class MainPageRouter extends StatefulWidget {
@@ -19,10 +28,18 @@ class MainPageRouter extends StatefulWidget {
 
 class _MainPageRouterState extends State<MainPageRouter> {
   late int _currentIndex;
+
+  final TextEditingController _controller = TextEditingController();
   @override
   void initState() {
     super.initState();
     _currentIndex = 0;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose(); // important pour éviter les fuites de mémoire
+    super.dispose();
   }
 
   @override
@@ -64,14 +81,40 @@ class _MainPageRouterState extends State<MainPageRouter> {
                           ),
                         ],
                       ),
-                      Container(
-                          padding: EdgeInsets.symmetric(horizontal: 30),
-                          child: TextFormField()),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Method de creation ou d update challenge et pledge.
+                      TextFormField(
+                        controller: _controller,
+                        decoration:
+                            InputDecoration(labelText: "Nom du challenge"),
+                      ),
+                      Consumer(
+                        builder: (context, ref, child) {
+                          return ElevatedButton(
+                            onPressed: () async {
+                              // Method de creation ou d update challenge et pledge.
+                              final title = _controller.text.trim();
+                              if (title.isEmpty) return;
+                              final Challenge challenge = Challenge(
+                                  id: 11,
+                                  description: title,
+                                  status: ChallengeStatus.created,
+                                  playerId: widget.currentPlayer.id,
+                                  gameId: null);
+                              final state = await ref
+                                  .read(createChallengeProvider.notifier)
+                                  .createChallenge(challenge: challenge);
+                              if (state is ccs.Loaded) {
+                                ref
+                                    .read(currentPlayerProvider.notifier)
+                                    .updateCurrentPlayerChallengeList(
+                                        newChallenge: state.challenge);
+                              }
+                              if (context.mounted) {
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: Text("Modifier / Créer un challenge"),
+                          );
                         },
-                        child: Text("Modifier / Créer un challenge"),
                       )
                     ],
                   ),

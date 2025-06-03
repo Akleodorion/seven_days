@@ -17,6 +17,22 @@ class Player extends Equatable {
     required this.targetPledge,
   });
 
+  Player copyWith({
+    int? id,
+    String? name,
+    List<Challenge>? challenges,
+    List<Pledge>? pledges,
+    List<Pledge>? targetPledge,
+  }) {
+    return Player(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      challenges: challenges ?? this.challenges,
+      pledges: pledges ?? this.pledges,
+      targetPledge: targetPledge ?? this.targetPledge,
+    );
+  }
+
   @override
   List<Object?> get props => [
         id,

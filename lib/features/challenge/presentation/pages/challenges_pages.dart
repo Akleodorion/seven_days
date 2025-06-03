@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:seven_days/features/challenge/domain/entity/challenge.dart';
+import 'package:seven_days/features/player/presentation/providers/notifiers/current_player_provider.dart';
 
-class ChallengesPages extends StatelessWidget {
+class ChallengesPages extends ConsumerWidget {
   final List<Challenge> challenges;
   const ChallengesPages({
     super.key,
@@ -9,7 +11,8 @@ class ChallengesPages extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(playerProvider);
     return Center(
       child: Column(
         children: [
@@ -25,11 +28,13 @@ class ChallengesPages extends StatelessWidget {
             for (var challenge in challenges)
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(border: Border.all()),
+                decoration: BoxDecoration(border: Border.all(),),
                 child: ListTile(
                   title: Text(challenge.description),
                   trailing: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // pop up edit
+                    },
                     icon: Icon(
                       Icons.settings,
                     ),

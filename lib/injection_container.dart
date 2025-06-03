@@ -1,4 +1,8 @@
 import 'package:get_it/get_it.dart';
+import 'package:seven_days/features/challenge/data/datasources/challenge_remote_data_source.dart';
+import 'package:seven_days/features/challenge/data/repository/challenge_repository_impl.dart';
+import 'package:seven_days/features/challenge/domain/repository/challenge_repository.dart';
+import 'package:seven_days/features/challenge/domain/usecases/create_challenge_usecase.dart';
 import 'package:seven_days/features/game/data/datasources/game_remote_data_source.dart';
 import 'package:seven_days/features/game/data/repository/game_repository_impl.dart';
 import 'package:seven_days/features/game/domain/repository/game_repository.dart';
@@ -53,4 +57,17 @@ Future<void> init() async {
   // Datasources
   sl.registerFactory<PlayerRemoteDataSourceImpl>(
       () => PlayerRemoteDataSourceImpl());
+
+  //* Feature: Challenge
+  // Usecases
+  sl.registerFactory<CreateChallengeUsecase>(
+      () => CreateChallengeUsecase(repository: sl()));
+
+  // Repository
+  sl.registerFactory<ChallengeRepository>(
+      () => ChallengeRepositoryImpl(dataSource: sl()));
+
+  // Datasources
+  sl.registerFactory<ChallengeRemoteDataSource>(
+      () => ChallengeRemoteDataSourceImpl());
 }
