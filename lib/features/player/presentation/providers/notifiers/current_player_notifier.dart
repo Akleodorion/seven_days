@@ -27,7 +27,6 @@ class CurrentPlayerNotifier extends StateNotifier<CurrentPlayerState> {
 
   updateCurrentPlayerChallengeList({required Challenge newChallenge}) {
     if (state is! Loaded) return state;
-
     final loadedState = state as Loaded;
     final player = loadedState.player;
     state = Loading();

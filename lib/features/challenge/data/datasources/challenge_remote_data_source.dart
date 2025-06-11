@@ -43,7 +43,7 @@ class ChallengeRemoteDataSourceImpl implements ChallengeRemoteDataSource {
           'Content-Type': 'application/json',
         });
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       final Map<String, dynamic> jsonData = json.decode(response.body);
       return ChallengeModel.fromJson(json: jsonData['challenge']);
     }

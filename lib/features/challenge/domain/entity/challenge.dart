@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:seven_days/core/enums/challenge_status.dart';
 
 class Challenge extends Equatable {
-  final int id;
+  final int? id;
   final int playerId;
   final String description;
   final ChallengeStatus status;

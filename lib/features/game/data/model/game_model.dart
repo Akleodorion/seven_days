@@ -20,7 +20,14 @@ class GameModel extends Game {
 
   factory GameModel.fromJson({required Map<String, dynamic> json}) {
     final List<Player> players = (json['players'] as List)
-        .map<PlayerModel>((json) => PlayerModel.fromJson(json: json))
+        .map<PlayerModel>(
+          (json) => PlayerModel.fromJson(
+            playerMap: json,
+            challengeMap: [],
+            pledgeMap: [],
+            targetMap: [],
+          ),
+        )
         .toList();
     return GameModel(
         id: json['id'],

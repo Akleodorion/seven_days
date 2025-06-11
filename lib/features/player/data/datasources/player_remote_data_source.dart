@@ -20,7 +20,12 @@ class PlayerRemoteDataSourceImpl implements PlayerRemoteDataSource {
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
       final List<Player> playersData = jsonData['players']
-          .map<Player>((json) => PlayerModel.fromJson(json: json))
+          .map<Player>((json) => PlayerModel.fromJson(
+                playerMap: json['player'],
+                challengeMap: json['challenges'],
+                pledgeMap: json['pledges'],
+                targetMap: json['target_pledges'],
+              ))
           .toList();
 
       return playersData;
@@ -45,7 +50,12 @@ class PlayerRemoteDataSourceImpl implements PlayerRemoteDataSource {
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
 
-      final Player playerData = PlayerModel.fromJson(json: jsonData);
+      final Player playerData = PlayerModel.fromJson(
+        playerMap: jsonData['player'],
+        challengeMap: jsonData['challenges'],
+        pledgeMap: jsonData['pledges'],
+        targetMap: jsonData['target_pledges'],
+      );
       return playerData;
     }
     throw ServerException(errorMessage: 'Oops');

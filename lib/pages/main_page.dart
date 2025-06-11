@@ -86,15 +86,16 @@ class _MainPageState extends State<MainPage> {
                         builder: (context, ref, child) {
                           return ElevatedButton(
                             onPressed: () async {
-                              // Method de creation ou d update challenge et pledge.
                               final title = _controller.text.trim();
                               if (title.isEmpty) return;
+
                               final Challenge challenge = Challenge(
-                                  id: 123,
+                                  id: null,
                                   description: title,
                                   status: ChallengeStatus.created,
                                   playerId: widget.currentPlayer.id,
                                   gameId: null);
+
                               final state = await ref
                                   .read(createChallengeProvider.notifier)
                                   .createChallenge(challenge: challenge);

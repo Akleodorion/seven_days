@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:seven_days/features/player/presentation/providers/current_player_provider.dart';
+import 'package:seven_days/features/player/presentation/providers/states/current_player_state.dart';
 
 class ChallengesPages extends ConsumerWidget {
   const ChallengesPages({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final player = ref.watch(playerProvider);
-
-    final challenges = player?.challenges ?? [];
+    final state = ref.watch(currentPlayerProvider);
+    var challenges = [];
+    if (state is Loaded) {
+      challenges = state.player.challenges;
+    }
 
     return Center(
       child: Column(

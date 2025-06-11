@@ -11,19 +11,20 @@ class PlayerModel extends Player {
     required super.targetPledge,
   });
 
-  factory PlayerModel.fromJson({required Map<String, dynamic> json}) {
+  factory PlayerModel.fromJson({
+    required Map<String, dynamic> playerMap,
+    required List<dynamic> challengeMap,
+    required List<dynamic> pledgeMap,
+    required List<dynamic> targetMap,
+  }) {
     return PlayerModel(
-      id: json['player']['id'],
-      name: json['player']['name'],
-      challenges: (json['challenges'] as List)
-          .map((e) => ChallengeModel.fromJson(json: e))
-          .toList(),
-      pledges: (json['pledges'] as List)
-          .map((e) => PledgeModel.fromJson(json: e))
-          .toList(),
-      targetPledge: (json['target_pledges'] as List)
-          .map((e) => PledgeModel.fromJson(json: e))
-          .toList(),
+      id: playerMap['id'],
+      name: playerMap['name'],
+      challenges:
+          challengeMap.map((e) => ChallengeModel.fromJson(json: e)).toList(),
+      pledges: pledgeMap.map((e) => PledgeModel.fromJson(json: e)).toList(),
+      targetPledge:
+          targetMap.map((e) => PledgeModel.fromJson(json: e)).toList(),
     );
   }
 }

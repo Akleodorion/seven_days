@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:seven_days/features/game/presentation/providers/active_game_provider.dart';
 import 'package:seven_days/features/game/presentation/providers/create_game_provider.dart';
 import 'package:seven_days/features/game/presentation/providers/states/create_game_state.dart';
-import 'package:seven_days/features/player/data/model/player_model.dart';
-import 'package:seven_days/features/player/domain/entity/player.dart';
 import 'package:seven_days/features/player/presentation/providers/fetch_players_provider.dart';
 
 class StartGamePage extends StatelessWidget {
