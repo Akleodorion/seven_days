@@ -16,10 +16,10 @@ class CreateChallengeNotifier extends StateNotifier<CreateChallengeState> {
     var result = await createChallengeUsecase.call(challenge: challenge);
     result.fold((failure) {
       if (failure is ServerFailure) {
-        state = Error(challenge: challenge, errorMessage: failure.errorMessage);
+        state = Error(challenge: null, errorMessage: failure.errorMessage);
       }
     }, (success) {
-      state = Loaded(challenge: challenge);
+      state = Loaded(challenge: success);
     });
     return state;
   }

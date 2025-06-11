@@ -15,6 +15,5 @@ final playerProvider = Provider((ref) {
   if (state is Loaded) {
     return state.player;
   }
-
   return null;
 });

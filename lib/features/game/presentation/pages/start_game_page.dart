@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:seven_days/features/game/presentation/providers/active_game_provider.dart';
 import 'package:seven_days/features/game/presentation/providers/create_game_provider.dart';
 import 'package:seven_days/features/game/presentation/providers/states/create_game_state.dart';
+import 'package:seven_days/features/player/data/model/player_model.dart';
 import 'package:seven_days/features/player/domain/entity/player.dart';
 import 'package:seven_days/features/player/presentation/providers/fetch_players_provider.dart';
 
@@ -16,12 +17,12 @@ class StartGamePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Consumer(builder: (context, ref, builder) {
-            final players = ref.watch(playersProvider);
+            final players = ref.read(playersProvider);
             return IconButton.outlined(
               onPressed: () async {
                 final state = await ref
                     .read(createGameProvider.notifier)
-                    .createGame(players: players as List<Player>);
+                    .createGame(players: players);
                 if (state is Loaded) {
                   ref.read(activeGameProvider.notifier).activeGame();
                 }

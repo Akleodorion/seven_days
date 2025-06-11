@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:seven_days/features/challenge/domain/entity/challenge.dart';
-import 'package:seven_days/features/player/presentation/providers/notifiers/current_player_provider.dart';
+import 'package:seven_days/features/player/presentation/providers/current_player_provider.dart';
 
 class ChallengesPages extends ConsumerWidget {
-  final List<Challenge> challenges;
-  const ChallengesPages({
-    super.key,
-    required this.challenges,
-  });
+  const ChallengesPages({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(playerProvider);
+    final player = ref.watch(playerProvider);
+
+    final challenges = player?.challenges ?? [];
+
     return Center(
       child: Column(
         children: [
@@ -21,14 +19,14 @@ class ChallengesPages extends ConsumerWidget {
             SizedBox(
               height: 300,
               child: Center(
-                child: Text("Vous n'avez pas encore créer de défi"),
+                child: Text("Vous n'avez pas encore créé de défi"),
               ),
             ),
           if (challenges.isNotEmpty)
             for (var challenge in challenges)
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(border: Border.all(),),
+                decoration: BoxDecoration(border: Border.all()),
                 child: ListTile(
                   title: Text(challenge.description),
                   trailing: IconButton(

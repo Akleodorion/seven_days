@@ -48,7 +48,7 @@ class Player extends Equatable {
       'name': name,
       'challenges': challenges.map((e) => e.toJson()).toList(),
       'pledges': pledges.map((e) => e.toJson()).toList(),
-      'targetPledge': targetPledge.map((e) => e.toJson()),
+      'targetPledge': targetPledge.map((e) => e.toJson()).toList(),
     };
   }
 }

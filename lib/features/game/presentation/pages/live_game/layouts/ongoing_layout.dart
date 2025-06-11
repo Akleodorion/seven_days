@@ -4,7 +4,7 @@ import 'package:seven_days/features/game/domain/entity/game.dart';
 import 'package:seven_days/features/game/presentation/providers/active_game_provider.dart';
 import 'package:seven_days/features/game/presentation/providers/states/update_game_state.dart';
 import 'package:seven_days/features/game/presentation/providers/update_game_provider.dart';
-import 'package:seven_days/features/player/presentation/providers/notifiers/current_player_provider.dart';
+import 'package:seven_days/features/player/presentation/providers/current_player_provider.dart';
 
 class OngoingLayout extends ConsumerWidget {
   final Game game;

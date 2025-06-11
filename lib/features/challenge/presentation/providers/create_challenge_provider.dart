@@ -5,9 +5,11 @@ import 'package:seven_days/features/challenge/presentation/providers/states/noti
 import 'package:seven_days/injection_container.dart';
 
 final createChallengeProvider =
-    StateNotifierProvider<CreateChallengeNotifier, CreateChallengeState>((ref) {
-  final CreateChallengeUsecase createChallengeUsecase =
-      sl<CreateChallengeUsecase>();
-  return CreateChallengeNotifier(
-      createChallengeUsecase: createChallengeUsecase);
-});
+    StateNotifierProvider<CreateChallengeNotifier, CreateChallengeState>(
+  (ref) {
+    final CreateChallengeUsecase createChallengeUsecase =
+        sl<CreateChallengeUsecase>();
+    return CreateChallengeNotifier(
+        createChallengeUsecase: createChallengeUsecase);
+  },
+);
