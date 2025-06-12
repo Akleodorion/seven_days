@@ -26,7 +26,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   late int _currentIndex;
-
   final TextEditingController _controller = TextEditingController();
   @override
   void initState() {
