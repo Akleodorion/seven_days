@@ -55,8 +55,14 @@ class ChallengeRemoteDataSourceImpl implements ChallengeRemoteDataSource {
 
   @override
   Future<Challenge> updateChallenge({required Challenge challenge}) async {
-    final Uri url = Uri.parse('String');
-    final response = await http.get(url);
+    final Uri url =
+        Uri.parse('http://localhost:3000/api/v1/challenges/${challenge.id}');
+    final response = await http.patch(
+      url,
+      body: json.encode(
+        challenge.toJson(),
+      ),
+    );
 
     if (response.statusCode == 201) {
       final Map<String, dynamic> jsonData = json.decode(response.body);
