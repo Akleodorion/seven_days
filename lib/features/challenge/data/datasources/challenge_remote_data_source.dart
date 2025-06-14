@@ -59,6 +59,10 @@ class ChallengeRemoteDataSourceImpl implements ChallengeRemoteDataSource {
         Uri.parse('http://localhost:3000/api/v1/challenges/${challenge.id}');
     final response = await http.patch(
       url,
+      headers: {
+        "Content-Type": 'application/json',
+        'Accept': 'application/json',
+      },
       body: json.encode(
         challenge.toJson(),
       ),

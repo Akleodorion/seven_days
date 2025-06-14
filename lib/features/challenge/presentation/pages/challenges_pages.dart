@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:seven_days/features/challenge/data/model/challenge_model.dart';
+import 'package:seven_days/features/challenge/domain/entity/challenge.dart';
+import 'package:seven_days/features/challenge/presentation/providers/update_challenge_provider.dart';
 import 'package:seven_days/features/player/presentation/providers/current_player_provider.dart';
 import 'package:seven_days/features/player/presentation/providers/states/current_player_state.dart';
 
@@ -27,7 +30,7 @@ class _ChallengesPagesState extends ConsumerState<ChallengesPages> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(currentPlayerProvider);
-    var challenges = [];
+    List<Challenge> challenges = [];
     if (state is Loaded) {
       challenges = state.player.challenges;
     }
@@ -87,6 +90,19 @@ class _ChallengesPagesState extends ConsumerState<ChallengesPages> {
                                         final title = _controller.text.trim();
                                         if (title.isEmpty) return;
 
+                                        final ChallengeModel newChallenge =
+                                            ChallengeModel(
+                                          id: challenge.id,
+                                          playerId: challenge.playerId,
+                                          gameId: challenge.gameId,
+                                          description: title,
+                                          status: challenge.status,
+                                        );
+                                        final state = await ref
+                                            .read(updateChallengeProvider
+                                                .notifier)
+                                            .updateChallenge(
+                                                challenge: newChallenge);
                                         if (context.mounted) {
                                           Navigator.pop(context);
                                         }

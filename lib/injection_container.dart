@@ -4,6 +4,7 @@ import 'package:seven_days/features/challenge/data/repository/challenge_reposito
 import 'package:seven_days/features/challenge/domain/repository/challenge_repository.dart';
 import 'package:seven_days/features/challenge/domain/usecases/create_challenge_usecase.dart';
 import 'package:seven_days/features/challenge/domain/usecases/fetch_challenges_usecase.dart';
+import 'package:seven_days/features/challenge/domain/usecases/update_challenge_usecase.dart';
 import 'package:seven_days/features/game/data/datasources/game_remote_data_source.dart';
 import 'package:seven_days/features/game/data/repository/game_repository_impl.dart';
 import 'package:seven_days/features/game/domain/repository/game_repository.dart';
@@ -65,6 +66,8 @@ Future<void> init() async {
       () => CreateChallengeUsecase(repository: sl()));
   sl.registerFactory<FetchChallengesUsecase>(
       () => FetchChallengesUsecase(repository: sl()));
+  sl.registerFactory<UpdateChallengeUsecase>(
+      () => UpdateChallengeUsecase(repository: sl()));
 
   // Repository
   sl.registerFactory<ChallengeRepository>(

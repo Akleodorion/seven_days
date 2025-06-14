@@ -31,7 +31,7 @@ class ChallengeRepositoryImpl implements ChallengeRepository {
   @override
   Future<Either<Failure, Challenge>> updateChallenge(
       {required Challenge challenge}) async {
-    return _executeChallenge(dataSource.createChallenge(challenge: challenge));
+    return _executeChallenge(dataSource.updateChallenge(challenge: challenge));
   }
 
   Future<Either<Failure, Challenge>> _executeChallenge(
