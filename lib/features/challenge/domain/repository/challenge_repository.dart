@@ -8,4 +8,6 @@ abstract class ChallengeRepository {
       {required Challenge challenge});
   Future<Either<Failure, Challenge>> updateChallenge(
       {required Challenge challenge});
+  Future<Either<Failure, void>> destroyChallenge(
+      {required Challenge challenge});
 }

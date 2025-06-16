@@ -8,6 +8,7 @@ abstract class ChallengeRemoteDataSource {
   Future<List<Challenge>> fetchChallenges();
   Future<Challenge> updateChallenge({required Challenge challenge});
   Future<Challenge> createChallenge({required Challenge challenge});
+  Future<void> destroyChallenge({required Challenge challenge});
 }
 
 class ChallengeRemoteDataSourceImpl implements ChallengeRemoteDataSource {
@@ -71,6 +72,30 @@ class ChallengeRemoteDataSourceImpl implements ChallengeRemoteDataSource {
     if (response.statusCode == 201) {
       final Map<String, dynamic> jsonData = json.decode(response.body);
       return ChallengeModel.fromJson(json: jsonData['challenge']);
+    }
+
+    throw ServerException(
+      errorMessage: "Mauvais requête serveur, veuillez ré-essayer plus tard",
+    );
+  }
+
+  @override
+  Future<void> destroyChallenge({required Challenge challenge}) async {
+    final Uri url =
+        Uri.parse('http://localhost:3000/api/v1/challenges/${challenge.id}');
+    final response = await http.delete(
+      url,
+      headers: {
+        "Content-Type": 'application/json',
+        'Accept': 'application/json',
+      },
+      body: json.encode(
+        challenge.toJson(),
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      return;
     }
 
     throw ServerException(

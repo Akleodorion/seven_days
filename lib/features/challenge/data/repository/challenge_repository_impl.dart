@@ -23,6 +23,17 @@ class ChallengeRepositoryImpl implements ChallengeRepository {
   }
 
   @override
+  Future<Either<Failure, void>> destroyChallenge(
+      {required Challenge challenge}) async {
+    try {
+      final response = await dataSource.destroyChallenge(challenge: challenge);
+      return Right(response);
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(errorMessage: failure.errorMessage));
+    }
+  }
+
+  @override
   Future<Either<Failure, Challenge>> createChallenge(
       {required Challenge challenge}) async {
     return _executeChallenge(dataSource.createChallenge(challenge: challenge));
