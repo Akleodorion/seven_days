@@ -102,7 +102,8 @@ class _MainPageState extends State<MainPage> {
                                 ref
                                     .read(currentPlayerProvider.notifier)
                                     .updateCurrentPlayerChallengeList(
-                                        newChallenge: state.challenge);
+                                        challenge: state.challenge,
+                                        isAdd: true);
                               }
                               if (context.mounted) {
                                 Navigator.pop(context);

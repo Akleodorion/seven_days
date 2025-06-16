@@ -3,7 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:seven_days/features/challenge/data/model/challenge_model.dart';
 import 'package:seven_days/features/challenge/domain/entity/challenge.dart';
+import 'package:seven_days/features/challenge/presentation/providers/destroy_challenge_provider.dart';
+import 'package:seven_days/features/challenge/presentation/providers/states/destroy_challenge_state.dart';
 import 'package:seven_days/features/challenge/presentation/providers/update_challenge_provider.dart';
+import 'package:seven_days/features/player/presentation/providers/current_player_provider.dart';
 
 class ChallengeModalBottomSheet extends ConsumerStatefulWidget {
   final Challenge challenge;
@@ -37,7 +40,20 @@ class _ChallengeModalBottomSheetState
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                final destroyState = await ref
+                    .read(destroyChallengeProvider.notifier)
+                    .destroyChallenge(challenge: widget.challenge);
+                if (destroyState is Loaded) {
+                  ref
+                      .read(currentPlayerProvider.notifier)
+                      .updateCurrentPlayerChallengeList(
+                          challenge: widget.challenge, isAdd: false);
+                }
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
+              },
               icon: Icon(
                 Icons.delete,
                 color: Colors.red,
@@ -49,30 +65,26 @@ class _ChallengeModalBottomSheetState
           controller: _controller,
           decoration: InputDecoration(labelText: widget.challenge.description),
         ),
-        Consumer(
-          builder: (context, ref, child) {
-            return ElevatedButton(
-              onPressed: () async {
-                final title = _controller.text.trim();
-                if (title.isEmpty) return;
+        ElevatedButton(
+          onPressed: () async {
+            final title = _controller.text.trim();
+            if (title.isEmpty) return;
 
-                final ChallengeModel newChallenge = ChallengeModel(
-                  id: widget.challenge.id,
-                  playerId: widget.challenge.playerId,
-                  gameId: widget.challenge.gameId,
-                  description: title,
-                  status: widget.challenge.status,
-                );
-                await ref
-                    .read(updateChallengeProvider.notifier)
-                    .updateChallenge(challenge: newChallenge);
-                if (context.mounted) {
-                  Navigator.pop(context);
-                }
-              },
-              child: Text("Modifier un challenge"),
+            final ChallengeModel newChallenge = ChallengeModel(
+              id: widget.challenge.id,
+              playerId: widget.challenge.playerId,
+              gameId: widget.challenge.gameId,
+              description: title,
+              status: widget.challenge.status,
             );
+            await ref
+                .read(updateChallengeProvider.notifier)
+                .updateChallenge(challenge: newChallenge);
+            if (context.mounted) {
+              Navigator.pop(context);
+            }
           },
+          child: Text("Modifier un challenge"),
         )
       ],
     );

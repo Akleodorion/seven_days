@@ -25,13 +25,14 @@ class CurrentPlayerNotifier extends StateNotifier<CurrentPlayerState> {
     return state;
   }
 
-  updateCurrentPlayerChallengeList({required Challenge newChallenge}) {
+  updateCurrentPlayerChallengeList(
+      {required Challenge challenge, required bool isAdd}) {
     if (state is! Loaded) return state;
     final loadedState = state as Loaded;
     final player = loadedState.player;
     state = Loading();
-    final newChallenges = List<Challenge>.from(player.challenges)
-      ..add(newChallenge);
+    final newChallenges = List<Challenge>.from(player.challenges);
+    isAdd ? newChallenges.add(challenge) : newChallenges.remove(challenge);
 
     final newPlayer = player.copyWith(challenges: newChallenges);
     state = Loaded(player: newPlayer);
