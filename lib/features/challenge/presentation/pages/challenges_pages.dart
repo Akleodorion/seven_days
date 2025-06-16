@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:seven_days/features/challenge/data/model/challenge_model.dart';
 import 'package:seven_days/features/challenge/domain/entity/challenge.dart';
-import 'package:seven_days/features/challenge/presentation/providers/update_challenge_provider.dart';
+import 'package:seven_days/features/challenge/presentation/pages/widgets/challenge_modal_bottom_sheet.dart';
 import 'package:seven_days/features/player/presentation/providers/current_player_provider.dart';
 import 'package:seven_days/features/player/presentation/providers/states/current_player_state.dart';
 
@@ -59,60 +58,8 @@ class _ChallengesPagesState extends ConsumerState<ChallengesPages> {
                       showModalBottomSheet(
                           context: context,
                           builder: (context) {
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Center(
-                                        child: Text("Edit"),
-                                      ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                TextFormField(
-                                  controller: _controller,
-                                  decoration: InputDecoration(
-                                      labelText: challenge.description),
-                                ),
-                                Consumer(
-                                  builder: (context, ref, child) {
-                                    return ElevatedButton(
-                                      onPressed: () async {
-                                        final title = _controller.text.trim();
-                                        if (title.isEmpty) return;
-
-                                        final ChallengeModel newChallenge =
-                                            ChallengeModel(
-                                          id: challenge.id,
-                                          playerId: challenge.playerId,
-                                          gameId: challenge.gameId,
-                                          description: title,
-                                          status: challenge.status,
-                                        );
-                                        final state = await ref
-                                            .read(updateChallengeProvider
-                                                .notifier)
-                                            .updateChallenge(
-                                                challenge: newChallenge);
-                                        if (context.mounted) {
-                                          Navigator.pop(context);
-                                        }
-                                      },
-                                      child: Text("Modifier un challenge"),
-                                    );
-                                  },
-                                )
-                              ],
-                            );
+                            return ChallengeModalBottomSheet(
+                                challenge: challenge);
                           });
                     },
                     icon: Icon(
