@@ -9,6 +9,8 @@ abstract class PledgeRemoteDataSource {
   Future<List<Pledge>> fetchPledges();
   Future<Pledge> createPledge();
   Future<Pledge> updatePledge();
+  Future<Pledge> markPledgeAsDone();
+  Future<Pledge> destroyPledge();
 }
 
 class PledgeRemoteDataSourceImpl implements PledgeRemoteDataSource {
@@ -54,5 +56,17 @@ class PledgeRemoteDataSourceImpl implements PledgeRemoteDataSource {
     }
 
     throw ServerException(errorMessage: 'oops');
+  }
+
+  @override
+  Future<Pledge> destroyPledge() {
+    // TODO: implement destroyPledge
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Pledge> markPledgeAsDone() {
+    // TODO: implement markPledgeAsDone
+    throw UnimplementedError();
   }
 }
